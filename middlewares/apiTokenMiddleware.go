@@ -20,6 +20,7 @@ func TokenValidator() gin.HandlerFunc {
 
 			userId, err := models.GetUserIdByToken(apiToken)
 			if err != nil {
+				models.Logger.Error(err)
 				c.AbortWithStatus(http.StatusUnauthorized)
 			}
 

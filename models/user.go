@@ -43,6 +43,7 @@ func CreateUser(login UserLoginDto) (User, error) {
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(login.Password), bcrypt.DefaultCost)
 	if err != nil {
+		Logger.Error(err)
 		return User{}, err
 	}
 
@@ -62,6 +63,9 @@ func CreateAccessToken(login UserLoginDto) (AccessToken, error) {
 	result := DB.First(&user, "username = ?", strings.ToLower(login.Username))
 
 	if result.Error != nil || bcrypt.CompareHashAndPassword(user.Password, []byte(login.Password)) != nil {
+		if result.Error != nil {
+			Logger.Error(result.Error)
+		}
 		return accessToken, errors.New("invalid username or password")
 	}
 
@@ -85,6 +89,9 @@ func GetUserIdByToken(token string) (uint, error) {
 	result := DB.First(&accessToken, "token = ?", token)
 
 	if result.Error != nil {
+		if result.Error != nil {
+			Logger.Error(result.Error)
+		}
 		return 0, errors.New("invalid access token")
 	}
 

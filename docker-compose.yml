@@ -1,0 +1,15 @@
+services:
+  api:
+    image: jhell/link-collector-api:latest
+    ports:
+      - "127.0.0.1:8420:8420"
+    restart: unless-stopped
+    environment:
+      DSN: host=db user=postgres password=postgres dbname=link-collector port=5432 sslmode=disable TimeZone=Europe/Berlin
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: link-collector
+    restart: unless-stopped

@@ -12,6 +12,7 @@ func AddLink(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&linkDto)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -42,6 +43,7 @@ func DeleteLink(c *gin.Context) {
 	linkId, err := strconv.ParseUint(c.Param("id"), 10, 32)
 
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid link id"})
 		return
 	}
@@ -54,6 +56,7 @@ func UpdateLink(c *gin.Context) {
 	userId := c.MustGet("user_id").(uint)
 	linkId, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid link id"})
 		return
 	}
@@ -62,6 +65,7 @@ func UpdateLink(c *gin.Context) {
 
 	err = c.ShouldBindJSON(&linkDto)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

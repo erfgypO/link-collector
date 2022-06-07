@@ -1,0 +1,4 @@
+logs/
+bin/
+go.sum
+docker-compose.yml

@@ -11,12 +11,14 @@ func SignUp(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&login)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	_, err = models.CreateUser(login)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -30,12 +32,14 @@ func SignIn(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&login)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	accessToken, err := models.CreateAccessToken(login)
 	if err != nil {
+		models.Logger.Error(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 	c.JSON(http.StatusOK, accessToken)

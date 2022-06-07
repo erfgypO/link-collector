@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -8,6 +9,7 @@ import (
 )
 
 var DB *gorm.DB
+var Logger *logrus.Logger
 
 func CreateDbConnection() {
 	dsn := os.Getenv("DSN")
@@ -21,4 +23,8 @@ func CreateDbConnection() {
 	db.AutoMigrate(&AccessToken{})
 	db.AutoMigrate(&Link{})
 	DB = db
+}
+
+func SetupLogger(logger *logrus.Logger) {
+	Logger = logger
 }
