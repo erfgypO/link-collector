@@ -7,10 +7,15 @@ services:
     environment:
       DSN: host=db user=postgres password=postgres dbname=link-collector port=5432 sslmode=disable TimeZone=Europe/Berlin
       GIN_MODE: release
-      
+
   db:
     image: postgres:14
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: link-collector
+      PGDATA: /var/lib/postgresql/data/pgdata
     restart: unless-stopped
+    volumes:
+      - pg-data_/var/lib/postgresql/data
+volumes:
+  pg-data: {}
