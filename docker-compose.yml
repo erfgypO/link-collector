@@ -6,7 +6,8 @@ services:
     restart: unless-stopped
     environment:
       DSN: host=db user=postgres password=postgres dbname=link-collector port=5432 sslmode=disable TimeZone=Europe/Berlin
-
+      GIN_MODE: release
+      
   db:
     image: postgres:14
     environment:
